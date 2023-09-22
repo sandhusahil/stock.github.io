@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inventory Tracking</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+
+    <style>
+        /* Reset some default browser styles */
+body, h1, h2, p, ul, li, table, th, td, form, input, button {
+    margin: 0;
+    padding: 0;
+}
+
+/* Set a background color and text color for the body */
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+/* Style the header */
+header {
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Style the navigation menu */
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    background-color: #333;
+    padding: 10px 0;
+}
+
+nav li {
+    margin: 0 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Style the main sections */
+section {
+    background-color: #fff;
+    padding: 40px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the inventory table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Style form elements */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button[type="submit"] {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Style the footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+    font-size: 14px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav li {
+        margin: 10px 0;
+    }
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Inventory Tracking</h1>
+        <p>Efficiently monitor and manage your inventory in real-time.</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#check-inventory">Check Inventory</a></li>
+            <li><a href="#receive-shipments">Receive Shipments</a></li>
+            <li><a href="#return-items">Return Items</a></li>
+        </ul>
+    </nav>
+
+    <section id="check-inventory">
+        <h2>Check Inventory</h2>
+        <p>View real-time inventory levels:</p>
+        <!-- Add a table to display inventory data -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Add rows of inventory data -->
+                <tr>
+                    <td>Product A</td>
+                    <td>Electronics</td>
+                    <td>100</td>
+                </tr>
+                <tr>
+                    <td>Product B</td>
+                    <td>Clothing</td>
+                    <td>50</td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </section>
+
+    <section id="receive-shipments">
+        <h2>Receive Shipments</h2>
+        <p>Update inventory after receiving new shipments:</p>
+        <form>
+            <!-- Add input fields for receiving shipments -->
+            <label for="product-received">Product Name:</label>
+            <input type="text" id="product-received" name="product-received" required>
+            
+            <label for="quantity-received">Quantity Received:</label>
+            <input type="text" id="quantity-received" name="quantity-received" required>
+            
+            <button type="submit">Receive Shipment</button>
+        </form>
+    </section>
+
+    <section id="return-items">
+        <h2>Return Items</h2>
+        <p>Process returned items and update inventory:</p>
+        <form>
+            <!-- Add input fields for returning items -->
+            <label for="product-returned">Product Name:</label>
+            <input type="text" id="product-returned" name="product-returned" required>
+            
+            <label for="quantity-returned">Quantity Returned:</label>
+            <input type="text" id="quantity-returned" name="quantity-returned" required>
+            
+            <button type="submit">Process Return</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Inventory Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>
