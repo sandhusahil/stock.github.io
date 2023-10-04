@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State Data</title>
+    <style>
+        /* Basic styling for the form */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        select, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>State Data</h2>
+        <form id="stateForm">
+            <label for="state">Select a State:</label>
+            <select id="state" name="state">
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                <option value="Assam">Assam</option>
+                <option value="Bihar">Bihar</option>
+                <!-- Add more states here -->
+            </select>
+
+            <label for="metrics">Select a Metrics:</label>
+            <select id="metrics" name="metrics">
+                <option value="Total Sales">Total Sales</option>
+                <option value="Total Revenue">Total Revenue</option>
+                <option value="Total Stock">Total Stock</option>
+                <option value="Total Rating">Total Rating</option>
+                <!-- Add more matrics here -->
+            </select>
+
+            <!-- <label for="totalProducts">Total Products:</label>
+            <input type="text" id="totalProducts" name="totalProducts" placeholder="Enter total products"> -->
+
+            <!-- Add more input fields as needed -->
+
+            <button type="button" onclick="submitForm()">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function submitForm() {
+            // Get values from the form
+            const state = document.getElementById("state").value;
+            const metrics = document.getElementById("metrics").value;
+
+            // You can now use these values as needed, e.g., send them to a server or perform calculations
+
+            // For demonstration, we'll just display the values in an alert
+            alert(`State: ${state}\nmetrics: ${metrics}`);
+
+            function submitForm() {
+            const state = document.getElementById("stateSelect").value;
+            const metrics = [];
+            const metricCheckboxes = document.getElementsByName("metrics");
+            
+            metricCheckboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    metrics.push(checkbox.value);
+                }
+            });
+            
+            // Redirect to the next page with selected state and metrics as query parameters
+            const queryParams = `?state=${encodeURIComponent(state)}&metrics=${encodeURIComponent(metrics.join(','))}`;
+            window.location.href = 'next-page.html' + queryParams;
+        }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inventory Management System</title>
+
+    <!-- <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script>
+        const firebaseConfig = {
+    apiKey: "AIzaSyDiGGDywI0Xo41FL-dSY51TsnFi9QDhoI0",
+    authDomain: "great-5fd0c.firebaseapp.com",
+    databaseURL: "https://great-5fd0c-default-rtdb.firebaseio.com",
+    projectId: "great-5fd0c",
+    storageBucket: "great-5fd0c.appspot.com",
+    messagingSenderId: "427228281236",
+    appId: "1:427228281236:web:9facc9109d8ad44436f781",
+    measurementId: "G-3H5BJL8T9Y"
+  };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    </script> -->
+
+    <style>
+        /* Reset some default browser styles */
+body, h1, h2, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Set a background color and text color for the body */
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+/* Style the header */
+header {
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Style the navigation menu */
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    background-color: #333;
+    padding: 10px 0;
+}
+
+nav li {
+    margin: 0 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Style the main sections */
+section {
+    background-color: #fff;
+    padding: 40px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the CTA (Call to Action) button */
+.cta-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #0056b3;
+}
+
+/* Style the footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+    font-size: 14px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav li {
+        margin: 10px 0;
+    }
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Inventory Management</h1>
+        <p>Your all-in-one solution for efficient inventory tracking and sales management.</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#product">Products</a></li>
+            <li><a href="#inventory">Inventory</a></li>
+            <li><a href="#sales">Sales</a></li>
+        </ul>
+    </nav>
+
+    <section id="product">
+        <h2>Product Management</h2>
+        <p>Easily manage your product catalog:</p>
+        <ul>
+            <li>Add, edit, or delete products</li>
+            <li>Set prices, categories, and suppliers</li>
+            <li>Upload product images and descriptions</li>
+        </ul>
+        <a href="product-management.html" class="cta-button">Learn More</a>
+    </section>
+
+    <section id="inventory">
+        <h2>Inventory Tracking</h2>
+        <p>Stay in control of your stock levels:</p>
+        <ul>
+            <li>Real-time inventory updates</li>
+            <li>Receive low stock alerts</li>
+            <li>Track shipments and returns</li>
+        </ul>
+        <a href="inventory-tracking.html" class="cta-button">Learn More</a>
+    </section>
+
+    <section id="sales">
+        <h2>Sales Management</h2>
+        <p>Optimize your sales process:</p>
+        <ul>
+            <li>Create and manage orders</li>
+            <li>Generate sales reports</li>
+            <li>Track customer purchases</li>
+        </ul>
+        <a href="sales-management.html" class="cta-button">Learn More</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Inventory Management System. All rights reserved.</p>
+    </footer>
+
+<script src="homepage.js"></script>
+
+</body>
+
+</html>
