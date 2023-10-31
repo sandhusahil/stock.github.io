@@ -220,12 +220,22 @@ footer {
             <label for="date-range">Date Range:</label>
             <input type="date" id="date-range" name="date-range" required>
             
-            <button type="submit">Generate Report</button>
+            <button type="submit" id="button">Generate Report</button>
         </form>
     </section>
 
     <footer>
         <p>&copy; 2023 Inventory Management System. All rights reserved.</p>
     </footer>
+
+    <script>
+        // const button = document.getElementById("button");
+
+        document.getElementById("button").addEventListener("click", function(event){
+  event.preventDefault();
+  window.location.href = "https://public.tableau.com/app/profile/sahilpreet.singh8278/viz/Analysis_16985896486280/Dashboard1?publish=yes";
+
+});
+    </script>
 </body>
 </html>
