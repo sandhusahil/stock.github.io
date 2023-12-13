@@ -12,10 +12,6 @@
             margin-top: 20px;
         }
 
-        /* Your existing styles here */
-
-
-
         section#manage-suppliers {
             background-color: #fff;
             padding: 40px;
@@ -54,6 +50,26 @@
         section#manage-suppliers form button[type="submit"]:hover {
             background-color: #0056b3;
         }
+
+        section#supplier-table {
+            margin-top: 20px;
+        }
+
+        section#supplier-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        section#supplier-table th,
+        section#supplier-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        section#supplier-table th {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 
@@ -62,24 +78,12 @@
         <!-- Your header content here -->
     </header>
 
-
-
-    <section id="check-inventory">
-        <!-- Your existing "Check Inventory" section here -->
-    </section>
-
-    <section id="receive-shipments">
-        <!-- Your existing "Receive Shipments" section here -->
-    </section>
-
-    <section id="return-items">
-        <!-- Your existing "Return Items" section here -->
-    </section>
+    <!-- ... Your other sections ... -->
 
     <section id="manage-suppliers">
         <h2>Manage Suppliers</h2>
         <p>Manage supplier information like name, contact details, payment terms, etc.</p>
-        <form>
+        <form id="supplierForm">
             <label for="supplier-name">Supplier Name:</label>
             <input type="text" id="supplier-name" name="supplier-name" required>
 
@@ -89,8 +93,24 @@
             <label for="payment-terms">Payment Terms:</label>
             <input type="text" id="payment-terms" name="payment-terms" required>
 
-            <button type="submit">Add Supplier</button>
+            <button type="submit" id="addSupplier">Add Supplier</button>
         </form>
+
+        <section id="supplier-table">
+            <h2>Supplier List</h2>
+            <table id="supplierTable">
+                <thead>
+                    <tr>
+                        <th>Supplier Name</th>
+                        <th>Contact Details</th>
+                        <th>Payment Terms</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Supplier data will be displayed here -->
+                </tbody>
+            </table>
+        </section>
     </section>
 
     <footer>
@@ -98,49 +118,59 @@
     </footer>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCihLQmSt_2ss2o9JUiaY3TJ7jIRbxXp9w",
-            authDomain: "greatnew-c5ef2.firebaseapp.com",
-            projectId: "greatnew-c5ef2",
-            storageBucket: "greatnew-c5ef2.appspot.com",
-            messagingSenderId: "473679732061",
-            appId: "1:473679732061:web:17ee7dc2e86993178b1cb4",
-            measurementId: "G-EK91CNSGXS"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-
-        // Initialize Firestore
-        const db = firebase.firestore();
-
         document.addEventListener('DOMContentLoaded', function () {
-            const form = document.querySelector('#manage-suppliers form');
+            const supplierForm = document.getElementById('supplierForm');
+            const supplierTable = document.getElementById('supplierTable');
+            const suppliers = JSON.parse(localStorage.getItem('suppliers')) || [];
 
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
+            function saveToLocalStorage() {
+                localStorage.setItem('suppliers', JSON.stringify(suppliers));
+            }
 
-                // Get form values
+            function renderSupplierTable() {
+                const tbody = supplierTable.querySelector('tbody');
+                tbody.innerHTML = '';
+
+                for (const supplier of suppliers) {
+                    const row = document.createElement('tr');
+                    const nameCell = document.createElement('td');
+                    nameCell.textContent = supplier.name;
+                    const contactCell = document.createElement('td');
+                    contactCell.textContent = supplier.contact;
+                    const paymentCell = document.createElement('td');
+                    paymentCell.textContent = supplier.paymentTerms;
+
+                    row.appendChild(nameCell);
+                    row.appendChild(contactCell);
+                    row.appendChild(paymentCell);
+                    tbody.appendChild(row);
+                }
+            }
+
+            function addSupplier() {
                 const supplierName = document.getElementById('supplier-name').value;
                 const contactDetails = document.getElementById('contact-details').value;
                 const paymentTerms = document.getElementById('payment-terms').value;
 
-                // Add supplier to Firestore
-                db.collection('suppliers').add({
+                suppliers.push({
                     name: supplierName,
                     contact: contactDetails,
                     paymentTerms: paymentTerms
-                })
-                    .then(function (docRef) {
-                        console.log('Supplier added with ID: ', docRef.id);
-                        // You can add additional actions after successful submission
-                    })
-                    .catch(function (error) {
-                        console.error('Error adding supplier: ', error);
-                    });
-            });
-        });
+                });
 
+                saveToLocalStorage();
+                renderSupplierTable();
+                supplierForm.reset();
+            }
+
+            supplierForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                addSupplier();
+            });
+
+            // Initial rendering on page load
+            renderSupplierTable();
+        });
     </script>
 
 </body>

@@ -1,11 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <title>Product Management</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 
     <style>
+        /* Your existing styles here */
+
+        /* Additional styles for the product table */
+        section#product-table {
+            margin-top: 20px;
+        }
+
+        section#product-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        section#product-table th,
+        section#product-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        section#product-table th {
+            background-color: #f2f2f2;
+        }
+
         /* Reset some default browser styles */
         body,
         h1,
@@ -83,7 +106,8 @@
             border-radius: 4px;
         }
 
-        button[type="submit"] {
+        button[type="submit"],
+        button[type="button"] {
             display: inline-block;
             padding: 10px 20px;
             background-color: #007bff;
@@ -96,7 +120,8 @@
             transition: background-color 0.3s ease;
         }
 
-        button[type="submit"]:hover {
+        button[type="submit"]:hover,
+        button[type="button"]:hover {
             background-color: #0056b3;
         }
 
@@ -120,6 +145,28 @@
                 margin: 10px 0;
             }
         }
+
+        /* Additional styles for the product table */
+        section#product-table {
+            margin-top: 20px;
+        }
+
+        section#product-table table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        section#product-table th,
+        section#product-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        section#product-table th {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 
@@ -132,15 +179,13 @@
     <nav>
         <ul>
             <li><a href="#add-product">Add Product</a></li>
-            <li><a href="#edit-product">Edit Product</a></li>
-            <li><a href="#delete-product">Delete Product</a></li>
         </ul>
     </nav>
 
     <section id="add-product">
         <h2>Add Product</h2>
         <p>Add new products to your catalog:</p>
-        <form>
+        <form id="productForm">
             <!-- Add input fields for product details -->
             <label for="product-name">Product Name:</label>
             <input type="text" id="productname" name="product-name" required>
@@ -154,110 +199,99 @@
             <label for="product-description">Description:</label>
             <textarea id="description" name="product-description" rows="4"></textarea>
 
-            <button type="submit" id="submitproduct">Add Product</button>
+            <!-- Change the button type to "button" -->
+            <button type="button" onclick="addProduct()">Add Product</button>
         </form>
     </section>
 
-    <section id="edit-product">
-        <h2>Edit Product</h2>
-        <p>Edit existing product details:</p>
-        <form>
-            <!-- Add input fields for editing product details -->
-            <label for="edit-product-id">Product ID:</label>
-            <input type="text" id="edit-product-id" name="edit-product-id" required>
-
-            <!-- Display existing product details for editing -->
-            <!-- Input fields for modifying product details -->
-
-            <button type="submit">Update Product</button>
-        </form>
+    <!-- New section for displaying the product table -->
+    <section id="product-table">
+        <h2>Product List</h2>
+        <table id="productsTable">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Product data will be displayed here -->
+            </tbody>
+        </table>
     </section>
 
-    <section id="delete-product">
-        <h2>Delete Product</h2>
-        <p>Delete products from your catalog:</p>
-        <form>
-            <label for="delete-product-id">Product ID:</label>
-            <input type="text" id="delete-product-id" name="delete-product-id" required>
-
-            <button type="submit">Delete Product</button>
-        </form>
-    </section>
+    <!-- Your existing sections for editing and deleting products -->
 
     <footer>
         <p>&copy; 2023 Inventory Management System. All rights reserved.</p>
     </footer>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const productForm = document.getElementById('productForm');
+            const productsTable = document.getElementById('productsTable');
+            let products = JSON.parse(localStorage.getItem('products')) || [];
 
-    <!-- <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
-        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js"
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
+            function saveToLocalStorage() {
+                localStorage.setItem('products', JSON.stringify(products));
+            }
 
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-    apiKey: "AIzaSyDiGGDywI0Xo41FL-dSY51TsnFi9QDhoI0",
-    authDomain: "great-5fd0c.firebaseapp.com",
-    databaseURL: "https://great-5fd0c-default-rtdb.firebaseio.com",
-    projectId: "great-5fd0c",
-    storageBucket: "great-5fd0c.appspot.com",
-    messagingSenderId: "427228281236",
-    appId: "1:427228281236:web:9facc9109d8ad44436f781",
-    measurementId: "G-3H5BJL8T9Y"
-  };
+            function renderProductsTable() {
+                const tbody = productsTable.querySelector('tbody');
+                tbody.innerHTML = '';
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const db = getDatabase(app);
+                for (const product of products) {
+                    const row = document.createElement('tr');
+                    const nameCell = document.createElement('td');
+                    nameCell.textContent = product.name;
+                    const priceCell = document.createElement('td');
+                    priceCell.textContent = product.price;
+                    const categoryCell = document.createElement('td');
+                    categoryCell.textContent = product.category;
+                    const descriptionCell = document.createElement('td');
+                    descriptionCell.textContent = product.description;
 
-        var ids;
+                    row.appendChild(nameCell);
+                    row.appendChild(priceCell);
+                    row.appendChild(categoryCell);
+                    row.appendChild(descriptionCell);
+                    tbody.appendChild(row);
+                }
+            }
 
-        function writeUserData() {
-            set(ref(db), {
-                username: 'sahil'
-            });
-        }
-        writeUserData()
+            function addProduct() {
+                const productName = document.getElementById('productname').value;
+                const price = document.getElementById('price').value;
+                const category = document.getElementById('category').value;
+                const description = document.getElementById('description').value;
 
-        const starCountRef = ref(db)
-        onValue(starCountRef, (snapshot) => {
-            const data = snapshot.val();
-            console.log(data);
-            var id = parseInt(Object.keys(data.users).pop());
-            console.log(id);
-            ids = id + 1;
-            console.log(ids);
-
-        });
-
-
-        document.getElementById("submitproduct").addEventListener("click", function (event) {
-            event.preventDefault();
-
-            let productname = document.getElementById("productname").value;
-            let price = document.getElementById("price").value;
-            let category = document.getElementById("category").value;
-            let description = document.getElementById("description").value;
-
-            function writeUserData() {
-
-                set(ref(db, 'users/' + ids), {
-                    id: ids,
-                    productname: productname,
+                const newProduct = {
+                    name: productName,
                     price: price,
                     category: category,
                     description: description
-                });
-            }
-            writeUserData();
+                };
 
+                products.push(newProduct);
+                saveToLocalStorage();
+                renderProductsTable();
+                productForm.reset();
+            }
+
+            // Change the event to click for the button
+            document.getElementById('productForm').addEventListener('click', function (event) {
+                if (event.target.type === 'button') {
+                    addProduct();
+                }
+            });
+
+            // Initial rendering on page load
+            renderProductsTable();
         });
-    </script> -->
+    </script>
+
 </body>
 
 </html>
