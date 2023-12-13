@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        main {
+            height: 80vh;
+            width: 35%;
+        }
+
+        .yourchat {
+            height: 10%;
+            background-color: rgb(55, 110, 155);
+            border-radius: 20px 20px 0px 0px ;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .yourchat h1 {
+            font-size: 25px;
+        }
+
+        .message {
+            height: 75%;
+            overflow: auto;
+            background-color: rgb(174, 188, 252);
+        }
+
+        .message ul {
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+        }
+
+        .message li {
+            min-height: 60px;
+            max-width: 60%;
+            /* min-width: fit-content; */
+            background-color: lightgray;
+            margin: 10px;
+            list-style-type: none;
+            font-size: 20px;
+            border-radius: 20px;
+            float: right;
+            text-align: center;
+            word-break: break-all;
+            padding: 10px;
+        }
+
+        form {
+            height: 15%;
+            background-color: rgb(55, 110, 155);
+            border-radius: 0px 0px 20px 20px ;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        form input {
+            font-size: 25px;
+            width: 80%;
+            margin-bottom: 15px;
+            border: none;
+        }
+
+        form input:focus {
+            outline: none;
+        }
+
+        form button {
+            font-size: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="yourchat">
+            <h1>Your chat</h1>
+        </div>
+
+        <div class="message">
+            <ul id="messages"></ul>
+        </div>
+
+        <form action="" class="box">
+            <input type="text" id="myInput" placeholder="Message" autocomplete="off" autofocus required>
+            <button type="submit" id="blur">➤</button>
+        </form>
+    </main>
+
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+        const firebaseConfig = {
+    apiKey: "AIzaSyCihLQmSt_2ss2o9JUiaY3TJ7jIRbxXp9w",
+    authDomain: "greatnew-c5ef2.firebaseapp.com",
+    projectId: "greatnew-c5ef2",
+    storageBucket: "greatnew-c5ef2.appspot.com",
+    messagingSenderId: "473679732061",
+    appId: "1:473679732061:web:17ee7dc2e86993178b1cb4",
+    measurementId: "G-EK91CNSGXS"
+  };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+
+    <script src="chat.js"></script>
+
+
+</body>
+
+</html>
