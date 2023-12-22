@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,106 +5,115 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Chat App</title>
     <style>
         body {
-            height: 90vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
         }
 
         main {
-            height: 80vh;
-            width: 35%;
-        }
-
-        .yourchat {
-            height: 10%;
-            background-color: rgb(55, 110, 155);
-            border-radius: 20px 20px 0px 0px ;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .yourchat h1 {
-            font-size: 25px;
-        }
-
-        .message {
-            height: 75%;
-            overflow: auto;
-            background-color: rgb(174, 188, 252);
-        }
-
-        .message ul {
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: end;
+            align-items: center;
+            justify-content: center;
         }
 
-        .message li {
-            min-height: 60px;
-            max-width: 60%;
-            /* min-width: fit-content; */
-            background-color: lightgray;
-            margin: 10px;
-            list-style-type: none;
-            font-size: 20px;
-            border-radius: 20px;
-            float: right;
+        header {
+            background-color: rgb(55, 110, 155);
+            color: white;
             text-align: center;
+            padding: 10px;
+            border-radius: 20px 20px 0px 0px;
+            width: 100%;
+        }
+
+        .message-container {
+            flex: 1;
+            width: 80%;
+            max-width: 600px;
+            overflow: auto;
+            background-color: rgb(174, 188, 252);
+            border-radius: 10px;
+            margin-top: 10px;
+            padding: 10px;
+        }
+
+        .message-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .message-item {
+            background-color: lightgray;
+            border-radius: 10px;
+            margin: 10px 0;
+            padding: 10px;
+            max-width: 70%;
             word-break: break-all;
+        }
+
+        .message-item.delete {
+            background-color: #ff9999;
+        }
+
+        .input-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgb(55, 110, 155);
+            border-radius: 0px 0px 20px 20px;
+            width: 80%;
+            max-width: 600px;
             padding: 10px;
         }
 
         form {
-            height: 15%;
-            background-color: rgb(55, 110, 155);
-            border-radius: 0px 0px 20px 20px ;
+            width: 80%;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
         }
 
         form input {
-            font-size: 25px;
-            width: 80%;
-            margin-bottom: 15px;
+            font-size: 16px;
+            padding: 8px;
+            flex: 1;
             border: none;
-        }
-
-        form input:focus {
-            outline: none;
+            border-radius: 5px;
+            margin-right: 10px;
         }
 
         form button {
-            font-size: 20px;
-            margin-bottom: 15px;
-            border-radius: 10px;
+            font-size: 16px;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
 
 <body>
     <main>
-        <div class="yourchat">
-            <h1>Your chat</h1>
+        <header>
+            <h1>Your Chat</h1>
+        </header>
+
+        <div class="message-container">
+            <ul class="message-list" id="messages"></ul>
         </div>
 
-        <div class="message">
-            <ul id="messages"></ul>
+        <div class="input-container">
+            <form id="messageForm">
+                <input type="text" id="myInput" placeholder="Type a message" autocomplete="off" required>
+                <button type="button" onclick="sendMessage()">Send</button>
+            </form>
         </div>
-
-        <form action="" class="box">
-            <input type="text" id="myInput" placeholder="Message" autocomplete="off" autofocus required>
-            <button type="submit" id="blur">➤</button>
-        </form>
     </main>
-
-
-
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
@@ -114,23 +122,78 @@
 
     <script>
         const firebaseConfig = {
-    apiKey: "AIzaSyCihLQmSt_2ss2o9JUiaY3TJ7jIRbxXp9w",
-    authDomain: "greatnew-c5ef2.firebaseapp.com",
-    projectId: "greatnew-c5ef2",
-    storageBucket: "greatnew-c5ef2.appspot.com",
-    messagingSenderId: "473679732061",
-    appId: "1:473679732061:web:17ee7dc2e86993178b1cb4",
-    measurementId: "G-EK91CNSGXS"
-  };
+            apiKey: "AIzaSyCihLQmSt_2ss2o9JUiaY3TJ7jIRbxXp9w",
+            authDomain: "greatnew-c5ef2.firebaseapp.com",
+            projectId: "greatnew-c5ef2",
+            storageBucket: "greatnew-c5ef2.appspot.com",
+            messagingSenderId: "473679732061",
+            appId: "1:473679732061:web:17ee7dc2e86993178b1cb4",
+            measurementId: "G-EK91CNSGXS"
+        };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
+
+        const db = firebase.database();
+        const myInput = document.getElementById('myInput');
+        const messageForm = document.getElementById('messageForm');
+        const messagesContainer = document.getElementById('messages');
+
+        let myName = prompt("Enter your Name") || "Guest";
+
+        function sendMessage() {
+            const message = myInput.value.trim();
+
+            if (message !== '') {
+                db.ref('messages').push().set({
+                    'sender': myName,
+                    'message': message
+                });
+                myInput.value = '';
+            }
+        }
+
+        db.ref('messages').on("child_added", function (snapshot) {
+            const message = snapshot.val();
+            const isMyMessage = message.sender === myName;
+            const liClass = isMyMessage ? 'message-item' : 'message-item delete';
+
+            const li = document.createElement('li');
+            li.className = liClass;
+            li.id = `message-${snapshot.key}`;
+            li.innerHTML = `
+                <strong>${message.sender}</strong><br>
+                ${message.message}<br>
+                <small>${formatMessageTime()}</small>
+            `;
+
+            if (isMyMessage) {
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.addEventListener('click', () => deleteMessage(snapshot.key));
+                li.appendChild(deleteButton);
+            }
+
+            messagesContainer.appendChild(li);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        });
+
+        db.ref('messages').on("child_removed", function (snapshot) {
+            const deletedLi = document.getElementById(`message-${snapshot.key}`);
+            if (deletedLi) {
+                deletedLi.innerHTML = "This message was deleted";
+            }
+        });
+
+        function deleteMessage(messageId) {
+            db.ref('messages').child(messageId).remove();
+        }
+
+        function formatMessageTime() {
+            const d = new Date();
+            return `${d.getHours()}:${d.getMinutes()}`;
+        }
     </script>
-
-    <script src="chat.js"></script>
-
-
 </body>
 
 </html>
